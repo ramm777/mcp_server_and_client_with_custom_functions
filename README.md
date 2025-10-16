@@ -1,6 +1,6 @@
 # Connect MCP Client to MCP Server adn Tools using n8n, Docker, WSL on Local PC 
 
-The Model Context Protocol (MCP) is a powerful open standard that allows AI systems—especially large language models (LLMs)—to securely interact with external tools, services, and data sources. Top 5 Key Points of Using MCP Servers & Clients: 
+The Model Context Protocol (MCP) is a powerful open standard that allows AI systems, especially large language models (LLMs), to securely interact with external tools, services, and data sources. Top 5 Key Points of Using MCP Servers & Clients: 
 	
 1) Modular Architecture
 	MCP Client (AI) can be on AWS cloud and MCP Server can be on local PC, thus no need to upload confidential data to the cloud.
