@@ -230,4 +230,6 @@ Open your browser and go to: https://n8n-demo.local
 # Credits
 ## Credits
 
-This setup is based on the solution described in ["Running N8N with MCP Servers: The Poorly Documented SSL Certificate Challenge"](https://medium.com/@gilad437/running-n8n-with-mcp-servers-the-poorly-documented-ssl-certificate-challenge-f0aa7961a3b0) and adapted for WSL/Windows environments from the MacOS. 
+This setup is based on the solution described in ["Running N8N with MCP Servers: The Poorly Documented SSL Certificate Challenge"](https://medium.com/@gilad437/running-n8n-with-mcp-servers-the-poorly-documented-ssl-certificate-challenge-f0aa7961a3b0) and adapted for WSL/Windows environments from the MacOS. It is also evolved from the 
+["Bitovi n8n getting started repo"](https://github.com/bitovi/n8n-getting-started)
+
