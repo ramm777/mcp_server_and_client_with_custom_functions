@@ -1,8 +1,17 @@
-# MCP Server and Client with Custom Functions
+# Connect MCP Client to MCP Server adn Tools using n8n, Docker, WSL on Local PC 
 
-This project sets up an N8N MCP (Model Context Protocol) server with proper SSL certificate handling for local development using Docker and Traefik reverse proxy.
-
-## What This Solves
+The Model Context Protocol (MCP) is a powerful open standard that allows AI systems—especially large language models (LLMs)—to securely interact with external tools, services, and data sources. Top 5 Key Points of Using MCP Servers & Clients: 
+	
+1) Modular Architecture
+	MCP Client (AI) can be on AWS cloud and MCP Server can be on local PC, thus no need to upload confidential data to the cloud.
+2) Standardized Communication Layer
+	Any MCP Client can talk to any compliant MCP Server because of unified JSON-RPC protocol. 
+3) Security 
+	MCP allows controlled exposure of data or functionality. MCP Server decides what to expose. 
+4) Dynamic Tools Discovery
+	You can plug in new servers (e.g., a Google Calendar MCP or a GitHub MCP) without retraining or redeploying the model
+		
+However, it is not easy to do and people face errors and bugs trying to do it. This project sets up an N8N MCP (Model Context Protocol) server with proper SSL certificate handling for local development using Docker and Traefik reverse proxy.
 
 MCP servers require HTTPS with valid SSL certificates. When running N8N in Docker containers, you can't just use self-signed certificates for `localhost` because:
 
@@ -21,7 +30,7 @@ We use **Traefik** as a reverse proxy to solve the SSL certificate challenge:
 
 ## Architecture
 
-<img src="images/n8n_scheme.png" alt="n8n scheme" width="600"/>
+<img src="images/n8n_scheme.png" alt="n8n scheme" width="850"/>
 
 Browser/MCP Client → Traefik (port 443) → N8N (port 5678)
 
