@@ -7,12 +7,12 @@
           "systemMessage": "=You are a helpful assistant.\nCurrent datetime is {{ $now.toString() }}"
         }
       },
-      "id": "b8b13009-2edc-497b-83eb-b878a3969df7",
+      "id": "fc3b3743-cbd7-4daa-a0e8-0ddb1993626b",
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
         928,
-        160
+        224
       ],
       "typeVersion": 1.8
     },
@@ -30,12 +30,12 @@
           ]
         }
       },
-      "id": "692f0d78-840d-413b-bf87-33361c60e209",
+      "id": "7354b4b1-826e-44bf-afcb-f5adfec79509",
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        1408,
-        1168
+        1360,
+        992
       ],
       "typeVersion": 1.1
     },
@@ -146,12 +146,12 @@
         },
         "options": {}
       },
-      "id": "ebb7c00e-678b-4be1-8633-19990acfa5d7",
+      "id": "576ca379-1396-41e3-89fd-a0969283dbb6",
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1632,
-        1136
+        1584,
+        960
       ],
       "typeVersion": 3.2
     },
@@ -169,12 +169,12 @@
         },
         "options": {}
       },
-      "id": "a85c25ee-464f-4e99-b095-5d3aaeb6eccd",
+      "id": "afe7f160-9481-4644-9a78-2e0f9bb70d11",
       "name": "Convert Text to Upper Case",
       "type": "n8n-nodes-base.set",
       "position": [
-        1968,
-        880
+        1888,
+        704
       ],
       "typeVersion": 3.4
     },
@@ -192,12 +192,12 @@
         },
         "options": {}
       },
-      "id": "7e3c1baa-f88a-4497-80a9-f4e7b060162a",
+      "id": "237aea27-1732-4331-bfe6-612340ea147d",
       "name": "Convert Text to Lower Case",
       "type": "n8n-nodes-base.set",
       "position": [
-        1968,
-        1056
+        1888,
+        880
       ],
       "typeVersion": 3.4
     },
@@ -243,12 +243,12 @@
           "convertFieldsToString": false
         }
       },
-      "id": "e24a6c5b-5f9b-4008-b53b-d755927b45ea",
+      "id": "c2306056-9e3d-4035-bd80-1f7809f6e211",
       "name": "Convert Text",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        1920,
-        528
+        736,
+        1088
       ],
       "typeVersion": 2.1
     },
@@ -256,84 +256,56 @@
       "parameters": {
         "options": {}
       },
-      "id": "0d680a7e-c487-4539-a638-5e922e4c925a",
+      "id": "9f109b75-59f3-4581-90cf-0ae282489175",
       "name": "When chat message received",
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "position": [
         720,
-        160
+        224
       ],
       "webhookId": "7b02318f-1c6b-4f2a-9a4f-b17fa69ea680",
       "typeVersion": 1.1
     },
     {
       "parameters": {},
-      "id": "dff9170d-6522-41b1-b0f5-a8d5ee5a02fb",
+      "id": "92fa8a75-4e4c-4e9d-80a3-6df15f7b40a1",
       "name": "Simple Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
         1024,
-        384
+        448
       ],
       "typeVersion": 1.3
     },
     {
       "parameters": {
-        "sseEndpoint": "https://n8n-demo.local/mcp/my-functions/sse",
-        "options": {}
-      },
-      "id": "09157c81-49f4-485a-8c04-99979c14c555",
-      "name": "My Functions",
-      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
-      "position": [
-        1472,
-        416
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## Activate the workflow to make the MCP Trigger work\nIn order to make the MCP server available, you need to activate the workflow.\n\nThen copy the Production URL of the MCP Trigger and paste it in the corresponding MCP Client tool.",
-        "height": 520,
+        "content": "## MCP Server\n- You must activate the workflow (green).\n- Copy the Production URL of the MCP Server and paste it in the corresponding MCP Client tool.\n- MCP Server must be exeecued first, and listening. Then you can chat with AI agent.\n",
+        "height": 776,
         "width": 620,
         "color": 3
       },
-      "id": "cd43e01b-92b7-40a9-a850-4d7b3fba7bbe",
+      "id": "8622aa9c-8922-4102-b5c5-b5c0033923b5",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1808,
-        160
+        640,
+        608
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "path": "my-functions"
-      },
-      "id": "4cac141d-d595-4d44-a72a-0b098ecd99f2",
-      "name": "My Functions Server",
-      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
-      "position": [
-        1920,
-        320
-      ],
-      "webhookId": "83f72547-18b7-4f02-846b-27bf39d1efff",
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## MCP Clients\nFor every tool here you need to obtain he corresponding Production URL from the MCP Triggers on the right 👉",
-        "height": 520,
-        "width": 440,
+        "content": "## MCP Clients\n- For every client here you need to obtain he corresponding Production URL from the MCP Server which is connected to set of functions \n- For example, for another client that will work with Google Calendar, you create another Clinet here, and another MCP server, where you connect functions to it (MCP Server)\n- Test the MCP functions by converting text to lower and upper case, generating five random user profiles, and retrieving three jokes.\n- The MCP Client doesn't need to know ahead of time which tools exist on MCP Server (dynamic)\n- The MCP Client query the MCP server at runtime to get a list of available tools, inspect tool metadata, select and invoke tools\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n## MCP Client is not directly connected to MCP Server\n- MCP Client can be on AWS cloud and MCP Server on local PC thus addressing data privacy \n\n",
+        "height": 440,
+        "width": 952,
         "color": 6
       },
-      "id": "e8bf79d3-d2e5-42ca-b0d4-7e96afc0c711",
+      "id": "cab22636-696e-4de1-89ac-13140e0ac0e9",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1312,
-        160
+        1296,
+        144
       ],
       "typeVersion": 1
     },
@@ -342,28 +314,12 @@
         "category": "randomData",
         "randomDataCount": "={{ $json.payload.number }}"
       },
-      "id": "85e8325e-ef02-42fc-8f37-023066e8d312",
+      "id": "a8ae852e-dcf6-451a-8945-baf8235ba346",
       "name": "Random user data",
       "type": "n8n-nodes-base.debugHelper",
       "position": [
-        1968,
-        1248
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "1. The workflow must be active\n2. For MCP Client Tools, use the Production URL from the MCP trigger\n3. MCP trigger must be exeecued first, and listening. Then you can chat with AI agent.\n\n### Test My Functions MCP\n\n1. Use your tools to convert this text to lower case: `EXAMPLE TeXt`\n\n2. Use your tools to convert this text to upper case: `example TeXt`\n\n3. Generate 5 random user data, please.\n\n4. Please obtain 3 jokes.\n\n\n",
-        "height": 352,
-        "width": 660,
-        "color": 7
-      },
-      "id": "097c7af6-8f7c-4d3b-8a98-8257bb45e9be",
-      "name": "Sticky Note2",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -16,
-        176
+        1888,
+        1072
       ],
       "typeVersion": 1
     },
@@ -409,12 +365,12 @@
           "convertFieldsToString": false
         }
       },
-      "id": "67c1a96e-70bb-4e44-97a2-a1ea2bd72cfc",
+      "id": "607e0a2d-5bc3-4826-ba80-3542a06f1485",
       "name": "Generate random user data",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        2080,
-        528
+        896,
+        1088
       ],
       "typeVersion": 2.1
     },
@@ -444,12 +400,12 @@
         },
         "options": {}
       },
-      "id": "0087e386-5702-45d4-8931-488353d51db9",
+      "id": "17f67918-0ea2-42aa-8ead-27030afe00dc",
       "name": "Return only some fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        2128,
-        1248
+        2064,
+        1072
       ],
       "typeVersion": 3.4
     },
@@ -458,12 +414,12 @@
         "url": "=https://official-joke-api.appspot.com/jokes/random/{{ $json.payload.number }}",
         "options": {}
       },
-      "id": "c5ae9763-d223-44c8-be7c-b36ca6daa558",
+      "id": "080183c5-3fe4-4582-8627-d727b5facd1a",
       "name": "Joke Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1968,
-        1424
+        1888,
+        1248
       ],
       "typeVersion": 4.2
     },
@@ -509,28 +465,28 @@
           "convertFieldsToString": false
         }
       },
-      "id": "00844331-f041-43a3-80c7-4050ec4226be",
+      "id": "dce3d9d1-0b65-4cb1-8ace-7d9cebd2cafd",
       "name": "Random Jokes",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        2240,
-        528
+        1056,
+        1088
       ],
       "typeVersion": 2.1
     },
     {
       "parameters": {
-        "content": "## The My Functions MCP calls this Sub-Workflow every time.\nA subworkflow is a separate workflow that can be called by other workflows and is able to receive parameters.\nLearn more about sub-workflows **[here](https://docs.n8n.io/flow-logic/subworkflows/)**",
-        "height": 820,
-        "width": 1036,
-        "color": 7
+        "content": "## The MCP Server calls these Sub-Workflows.\nA **[subworkflow](https://docs.n8n.io/flow-logic/subworkflows/)** is a separate workflow that can be called by other workflows and is able to receive parameters.\n",
+        "height": 772,
+        "width": 956,
+        "color": 4
       },
-      "id": "cd88b9db-2457-4ffa-9948-8d8298a7ce66",
+      "id": "1f981d44-e36b-4533-b7b9-666d7572dce1",
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1328,
-        768
+        1296,
+        608
       ],
       "typeVersion": 1
     },
@@ -544,50 +500,76 @@
         },
         "options": {}
       },
-      "id": "c340426c-b4f7-4835-9d82-11e6aa2d6531",
+      "id": "13af52cd-09c1-4418-ba9d-eceafcd9591c",
       "name": "OpenAI 4o",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
         880,
-        384
+        448
       ],
       "typeVersion": 1.2,
       "credentials": {
         "openAiApi": {
-          "id": "8ire1mHdDskr0XqN",
+          "id": "r5GJfV3Z63i3azTj",
           "name": "OpenAi account"
         }
       }
     },
     {
       "parameters": {
-        "content": "",
-        "height": 140,
-        "width": 3060,
-        "color": 4
+        "content": "# MCP Server and MCP Client on local windows PC with WSL\nThe Model Context Protocol (MCP) is a powerful open standard that allows AI systems—especially large language models (LLMs)—to securely interact with external tools, services, and data sources\n",
+        "height": 96,
+        "width": 1616
       },
-      "id": "5229ecef-7a2f-4b0d-85fb-914845449e67",
-      "name": "Sticky Note8",
+      "id": "fcb6b35a-1c19-4cbf-87cc-ca830844b366",
+      "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        0
+        640,
+        16
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "content": "# How to Build an MCP Server and Client on local windows PC with WSL",
-        "height": 80,
-        "width": 1360,
-        "color": 4
+        "path": "my-functions"
       },
-      "id": "dd7c151e-6b99-4785-b5e2-ab9f1ac804de",
-      "name": "Sticky Note9",
+      "id": "1487a413-1ae2-4b6f-8c70-ad500e4e4492",
+      "name": "MCP Server",
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "position": [
+        816,
+        880
+      ],
+      "webhookId": "83f72547-18b7-4f02-846b-27bf39d1efff",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://n8n-demo.local/mcp/my-functions/sse",
+        "options": {}
+      },
+      "id": "7afa601f-83be-40f4-8d20-81199f125fbd",
+      "name": "MCP client 1",
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "position": [
+        1456,
+        368
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## AI Agent\n\n",
+        "height": 440,
+        "width": 616
+      },
+      "id": "4b24dd90-87d1-456f-8cef-feebe88326a9",
+      "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1024,
-        32
+        640,
+        144
       ],
       "typeVersion": 1
     }
@@ -641,18 +623,7 @@
       "ai_tool": [
         [
           {
-            "node": "My Functions Server",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "My Functions": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
+            "node": "MCP Server",
             "type": "ai_tool",
             "index": 0
           }
@@ -663,7 +634,7 @@
       "ai_tool": [
         [
           {
-            "node": "My Functions Server",
+            "node": "MCP Server",
             "type": "ai_tool",
             "index": 0
           }
@@ -696,7 +667,7 @@
       "ai_tool": [
         [
           {
-            "node": "My Functions Server",
+            "node": "MCP Server",
             "type": "ai_tool",
             "index": 0
           }
@@ -724,16 +695,28 @@
           }
         ]
       ]
+    },
+    "MCP client 1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "e7624d23-a28f-45aa-8612-42edb900f059",
+  "versionId": "7d6b2368-6fa4-4011-9b18-f7fcd6f2a1bb",
   "meta": {
-    "instanceId": "c92188fc47f6039fb26616db18b08fab72a1d5772430ad29562eb999a9e866f9"
+    "templateCredsSetupCompleted": true,
+    "instanceId": "868f11c49489728e58fc6013c3954c5ef5603d874b4ce2cf2bf642824c360c3c"
   },
-  "id": "jUBk7imJm00Sw2hR",
+  "id": "hSmXgM4BqH1UmIgk",
   "tags": []
 }
