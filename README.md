@@ -20,6 +20,9 @@ We use **Traefik** as a reverse proxy to solve the SSL certificate challenge:
 - **No certificate validation mismatches**
 
 ## Architecture
+
+<img src="images/n8n_scheme.png" alt="n8n scheme" width="600"/>
+
 Browser/MCP Client → Traefik (port 443) → N8N (port 5678)
 
 
