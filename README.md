@@ -216,4 +216,6 @@ Open your browser and go to: https://n8n-demo.local
 - Works with MCP Client Tools
 
 # Credits
-This setup is based on the solution described in "Running N8N with MCP Servers: The Poorly Documented SSL Certificate Challenge" and adapted for WSL/Windows environments.
+## Credits
+
+This setup is based on the solution described in ["Running N8N with MCP Servers: The Poorly Documented SSL Certificate Challenge"](https://medium.com/@gilad437/running-n8n-with-mcp-servers-the-poorly-documented-ssl-certificate-challenge-f0aa7961a3b0) and adapted for WSL/Windows environments from the MacOS. 
