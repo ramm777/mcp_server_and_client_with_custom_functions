@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:v3
+    restart: always
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.file.filename=/etc/traefik/tls.yml"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8081:8080"
+    volumes:
+      - ./certs:/certs:ro
+      - ./traefik-tls.yml:/etc/traefik/tls.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  n8n:
+    image: n8nio/n8n:latest
+    restart: always
+    ports:
+      - "127.0.0.1:5678:5678"
+    extra_hosts:
+      - "n8n-demo.local:host-gateway"
+    labels:
+      - traefik.enable=true
+      # Main n8n router
+      - traefik.http.routers.n8n.rule=Host(`${DOMAIN_NAME}`)
+      - traefik.http.routers.n8n.tls=true
+      - traefik.http.routers.n8n.entrypoints=web,websecure
+      - traefik.http.middlewares.n8n.headers.SSLRedirect=true
+      - traefik.http.middlewares.n8n.headers.STSSeconds=315360000
+      - traefik.http.middlewares.n8n.headers.browserXSSFilter=true
+      - traefik.http.middlewares.n8n.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.n8n.headers.forceSTSHeader=true
+      - traefik.http.middlewares.n8n.headers.SSLHost=${DOMAIN_NAME}
+      - traefik.http.middlewares.n8n.headers.STSIncludeSubdomains=true
+      - traefik.http.middlewares.n8n.headers.STSPreload=true
+      - traefik.http.routers.n8n.middlewares=n8n@docker
+      # Configure no-gzip middleware for MCP endpoints
+      - traefik.http.middlewares.nogzip.headers.customResponseHeaders.Content-Encoding=""
+      # MCP-specific router for /mcp paths (disables gzip for SSE)
+      - traefik.http.routers.n8n_mcp.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`/mcp`)
+      - traefik.http.routers.n8n_mcp.tls=true
+      - traefik.http.routers.n8n_mcp.entrypoints=web,websecure
+      - traefik.http.routers.n8n_mcp.middlewares=nogzip
+      - traefik.http.routers.n8n_mcp.priority=100
+    environment:
+      - DB_TYPE=sqlite
+      - DB_SQLITE_DATABASE=/home/node/.n8n/database.sqlite
+      - N8N_HOST=${DOMAIN_NAME}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://${DOMAIN_NAME}/
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+      - N8N_PAYLOAD_SIZE_MAX=16
+      - N8N_FEATURE_FLAG_MCP=true
+      - EXECUTIONS_MODE=regular
+      - N8N_SECURE_COOKIE=true
+      - N8N_PROXY_HOPS=1
+      # This is the key - tell Node.js to trust the mkcert CA
+      - NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/mkcert/rootCA.pem
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - /mnt/d/mcp_server_and_client_with_custom_functions/files:/files
+      # Mount mkcert CA into the container
+      - /home/aidan/.local/share/mkcert:/usr/local/share/ca-certificates/mkcert:ro
+
+volumes:
+  n8n_data:

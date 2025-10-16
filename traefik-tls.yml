@@ -1,0 +1,10 @@
+tls:
+  certificates:
+    - certFile: /certs/n8n-demo.local.pem
+      keyFile: /certs/n8n-demo.local-key.pem
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /certs/n8n-demo.local.pem
+        keyFile: /certs/n8n-demo.local-key.pem
+
