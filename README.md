@@ -32,26 +32,31 @@ When running MCP on **n8n** inside **Docker containers**, you **cannot** rely on
 
 To handle SSL and domain routing cleanly, use **Traefik** as a reverse proxy in front of n8n. Key Benefits:
 
-- **Handles HTTPS (port 443)** requests from MCP clients or browsers.  
-- **Terminates SSL** using a valid certificate (e.g., from `mkcert` or Let’s Encrypt).  
-- **Forwards internal traffic** to n8n over plain HTTP (port 5678).  
-- **Maintains one trusted domain** (`n8n-demo.local`) to avoid SSL and CORS mismatches.  
-- **Resolves domain mapping** inside containers using:
-  ```yaml
-  extra_hosts:
-    - "n8n-demo.local:host.docker.internal"
+1. **Client opens `https://n8n-demo.local`**  
+   The MCP client or browser tries to reach `https://n8n-demo.local`.  
+   Inside Docker, the domain is mapped so everything resolves correctly:
 
+   ```yaml
+   extra_hosts:
+     - "n8n-demo.local:host.docker.internal"
+2. The request goes to Traefik. Traefik is listening on port 443 (HTTPS). It’s the front door for all secure traffic going to n8n.
+
+3. Traefik shows the SSL certificate (for example, one created with mkcert). The client checks the certificate and confirms that the domain name matches (`n8n-demo.local`).
+
+4. Traefik decrypts the HTTPS traffic secure request (SSL termination). Inside the Docker network, the request becomes a normal HTTP request.
+
+5. Traefik sends that decrypted HTTP request to the n8n container on port 5678.
+
+6. n8n handles the MCP request.
+
+7. Traefik re-encrypts the response. Traefik takes the plain HTTP response from n8n, encrypts it again with SSL, and sends it back to the client over HTTPS.
+
+8. The client receives a secure response
 
 ## Architecture
 
 <img src="images/n8n_scheme.png" alt="n8n scheme" width="850"/>
 
-Browser/MCP Client → Traefik (port 443) → N8N (port 5678)
-
-
-↑
-SSL Certificate
-(mkcert generated)
 
 ## Prerequisites
 
