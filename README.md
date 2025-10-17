@@ -13,22 +13,16 @@ The Model Context Protocol (MCP) is a powerful open standard that allows AI syst
 4) Dynamic Tools Discovery
 	You can plug in new servers (e.g., a Google Calendar MCP or a GitHub MCP) without retraining or redeploying the model.
 		
-However, it is not easy to do, and people face errors and bugs trying to do it. This project sets up an n8n MCP (Model Context Protocol) server with proper SSL certificate handling for local development using Docker and Traefik reverse proxy.
-
-MCP servers **require HTTPS** with **valid SSL/TLS certificates**.  
-When running MCP on **n8n** inside **Docker containers**, you **cannot** rely on self-signed certificates for `localhost` because:
+However, it is not easy to do, and people face errors and bugs trying to do it. This project sets up an n8n MCP (Model Context Protocol) server with proper SSL certificate handling for local development using Docker and Traefik reverse proxy. When running MCP on **n8n** inside **Docker containers**, you **cannot** rely on self-signed certificates for `localhost` because:
 
 1. **Container networking causes domain mismatches**  
    `localhost` inside a container refers to the container itself, not the host machine.
 
 2. **MCP libraries enforce HTTPS and SSE rules**  
-   - HTTPS connections must use valid, trusted certificates.  
-   - MCP also disables **gzip compression** for **Server-Sent Events (SSE)** on `/mcp` endpoints.
+   - HTTPS connections must use valid, trusted SSL/TLS certificates. MCP also disables **gzip compression** for **Server-Sent Events (SSE)** on `/mcp` endpoints.
 
 3. **Certificate validation fails inside containers**  
-   - Containers don’t automatically trust self-signed certificates.  
-   - Custom domains like `n8n-demo.local` may not resolve correctly in Docker or WSL.
-
+   - Containers don’t automatically trust self-signed certificates. Custom domains like `n8n-demo.local` may not resolve correctly in Docker or WSL.
 
 ### The Solution: Reverse Proxy Architecture Using Traefik
 
