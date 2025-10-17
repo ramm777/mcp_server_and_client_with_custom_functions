@@ -35,8 +35,7 @@ When running MCP on **n8n** inside **Docker containers**, you **cannot** rely on
 To handle SSL and domain routing cleanly, use **Traefik** as a reverse proxy in front of n8n. Key Benefits:
 
 1. **Client opens `https://n8n-demo.local`**  
-   The MCP client or browser tries to reach `https://n8n-demo.local`.  
-   Inside Docker, the domain is mapped so everything resolves correctly:
+   The MCP client or browser tries to reach `https://n8n-demo.local`. Inside the Docker container, when accessing n8n-demo.local, connect to the coputer running Docker (host machine).  
 
    ```yaml
    extra_hosts:
