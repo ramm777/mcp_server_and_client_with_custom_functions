@@ -13,20 +13,34 @@ The Model Context Protocol (MCP) is a powerful open standard that allows AI syst
 		
 However, it is not easy to do, and people face errors and bugs trying to do it. This project sets up an N8N MCP (Model Context Protocol) server with proper SSL certificate handling for local development using Docker and Traefik reverse proxy.
 
-MCP servers require HTTPS with valid SSL certificates. When running N8N in Docker containers, you can't just use self-signed certificates for `localhost` because:
+MCP servers **require HTTPS** with **valid SSL/TLS certificates**.  
+When running MCP on **n8n** inside **Docker containers**, you **cannot** rely on self-signed certificates for `localhost` because:
 
-1. **Container networking** creates domain mismatches
-2. **MCP libraries enforce HTTPS** at the protocol level
-3. **Certificate validation fails** when containers can't resolve domains properly
+1. **Container networking causes domain mismatches**  
+   `localhost` inside a container refers to the container itself, not the host machine.
 
-## The Solution: Reverse Proxy Architecture
+2. **MCP libraries enforce HTTPS and SSE rules**  
+   - HTTPS connections must use valid, trusted certificates.  
+   - MCP also disables **gzip compression** for **Server-Sent Events (SSE)** on `/mcp` endpoints.
 
-We use **Traefik** as a reverse proxy to solve the SSL certificate challenge:
+3. **Certificate validation fails inside containers**  
+   - Containers don’t automatically trust self-signed certificates.  
+   - Custom domains like `n8n-demo.local` may not resolve correctly in Docker or WSL.
 
-- **Traefik** handles HTTPS termination on port 443
-- **N8N** runs internally on port 5678
-- **Same domain and certificate** for both external and internal access
-- **No certificate validation mismatches**
+
+### The Solution: Reverse Proxy Architecture Using Traefik
+
+To handle SSL and domain routing cleanly, use **Traefik** as a reverse proxy in front of n8n. Key Benefits:
+
+- **Handles HTTPS (port 443)** requests from MCP clients or browsers.  
+- **Terminates SSL** using a valid certificate (e.g., from `mkcert` or Let’s Encrypt).  
+- **Forwards internal traffic** to n8n over plain HTTP (port 5678).  
+- **Maintains one trusted domain** (`n8n-demo.local`) to avoid SSL and CORS mismatches.  
+- **Resolves domain mapping** inside containers using:
+  ```yaml
+  extra_hosts:
+    - "n8n-demo.local:host.docker.internal"
+
 
 ## Architecture
 
