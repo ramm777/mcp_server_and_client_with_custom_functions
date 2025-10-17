@@ -1,5 +1,7 @@
 # Connect MCP Client to MCP Server and Tools using n8n, Docker, WSL on Local PC 
 
+<img src="images/n8n_scheme.png" alt="n8n scheme" width="850"/>
+
 The Model Context Protocol (MCP) is a powerful open standard that allows AI systems, especially large language models (LLMs), to securely interact with external tools, services, and data sources. Top 5 Key Points of Using MCP Servers & Clients: 
 	
 1) Modular Architecture
@@ -11,7 +13,7 @@ The Model Context Protocol (MCP) is a powerful open standard that allows AI syst
 4) Dynamic Tools Discovery
 	You can plug in new servers (e.g., a Google Calendar MCP or a GitHub MCP) without retraining or redeploying the model.
 		
-However, it is not easy to do, and people face errors and bugs trying to do it. This project sets up an N8N MCP (Model Context Protocol) server with proper SSL certificate handling for local development using Docker and Traefik reverse proxy.
+However, it is not easy to do, and people face errors and bugs trying to do it. This project sets up an n8n MCP (Model Context Protocol) server with proper SSL certificate handling for local development using Docker and Traefik reverse proxy.
 
 MCP servers **require HTTPS** with **valid SSL/TLS certificates**.  
 When running MCP on **n8n** inside **Docker containers**, you **cannot** rely on self-signed certificates for `localhost` because:
@@ -52,10 +54,6 @@ To handle SSL and domain routing cleanly, use **Traefik** as a reverse proxy in 
 7. Traefik re-encrypts the response. Traefik takes the plain HTTP response from n8n, encrypts it again with SSL, and sends it back to the client over HTTPS.
 
 8. The client receives a secure response
-
-## Architecture
-
-<img src="images/n8n_scheme.png" alt="n8n scheme" width="850"/>
 
 
 ## Prerequisites
@@ -126,7 +124,7 @@ docker-compose up -d
 docker ps
 ```
 
-### 6. Access N8N
+### 6. Access n8n
 
 Open your browser and go to: `https://n8n-demo.local`
 
@@ -134,7 +132,7 @@ Open your browser and go to: `https://n8n-demo.local`
 
 ### Why This Works
 
-1. **`extra_hosts`**: Allows N8N to resolve `n8n-demo.local` internally
+1. **`extra_hosts`**: Allows n8n to resolve `n8n-demo.local` internally
 2. **`NODE_EXTRA_CA_CERTS`**: Tells Node.js to trust the mkcert CA
 3. **mkcert CA mount**: Makes the certificate authority available inside the container
 4. **MCP-specific routing**: Disables gzip compression for Server-Sent Events
@@ -185,7 +183,7 @@ mkcert -cert-file ./certs/n8n-demo.local.pem -key-file ./certs/n8n-demo.local-ke
 
 2. **"Bad Gateway" errors**
    - Check container logs: `docker logs mcp_server_and_client_with_custom_functions_n8n_1`
-   - Ensure no port conflicts (N8N should run on 5678, Traefik on 443)
+   - Ensure no port conflicts (n8n should run on 5678, Traefik on 443)
 
 3. **Certificate validation errors**
    - Regenerate certificates: `mkcert -cert-file ./certs/n8n-demo.local.pem -key-file ./certs/n8n-demo.local-key.pem n8n-demo.local localhost 127.0.0.1`
@@ -219,7 +217,7 @@ The reverse proxy solution is the **only reliable approach** that:
 
 ## Credits
 
-This setup is based on the solution described in "Running N8N with MCP Servers: The Poorly Documented SSL Certificate Challenge" and adapted for WSL/Windows environments.
+This setup is based on the solution described in "Running n8n with MCP Servers: The Poorly Documented SSL Certificate Challenge" and adapted for WSL/Windows environments.
 
 # Create Configuration Files
 - traefik-tls.yml
